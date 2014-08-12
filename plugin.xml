@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="com.phonegap.plugins.baidupushservice"
+        version="0.0.1">
+
+    <name>BaiduPush</name>
+    <description>BaiduPush for cordova plugin</description>
+    <author>Roc Lee</author>
+    <keywords>BaiduPush,push,百度推送</keywords>
+    <license>Apache 2.0 License</license>
+
+    <engines>
+        <engine name="cordova" version=">=3.0"/>
+    </engines>
+
+    <js-module src="www/pushservice.js" name="BaiduPush">
+            <clobbers target="cordova.plugins.baiduPushService"/>
+    </js-module>
+
+        
+    <!-- android -->
+    <platform name="android">
+    
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="BaiduPush">
+                <param name="android-package" value="com.phonegap.plugins.baidupushservice.PushService"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <!-- Push service 运行需要的权限-->
+			<uses-permission android:name="android.permission.INTERNET"/>
+			<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+			<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+			<uses-permission android:name="android.permission.WRITE_SETTINGS" />
+			<uses-permission android:name="android.permission.VIBRATE" />
+			<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+			<uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER"/>
+			<uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+			<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+			<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+			<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+        <!-- push应用定义消息receiver声明 -->
+        <receiver android:name="com.phonegap.plugins.baidupushservice.PushMessageReceiver">
+            <intent-filter>
+                <!-- 接收push消息 -->
+                <action android:name="com.baidu.android.pushservice.action.MESSAGE" />
+                <!-- 接收bind,unbind,fetch,delete等反馈消息 -->
+                <action android:name="com.baidu.android.pushservice.action.RECEIVE" />
+                <action android:name="com.baidu.android.pushservice.action.notification.CLICK" />
+            </intent-filter>
+        </receiver>
+
+        <!-- push必须的receviver和service声明 -->
+        <receiver android:name="com.baidu.android.pushservice.PushServiceReceiver"
+                  android:process=":bdservice_v1">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="com.baidu.android.pushservice.action.notification.SHOW" />
+                <action android:name="com.baidu.android.pushservice.action.media.CLICK" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.baidu.android.pushservice.RegistrationReceiver"
+                  android:process=":bdservice_v1">
+            <intent-filter>
+                <action android:name="com.baidu.android.pushservice.action.METHOD" />
+                <action android:name="com.baidu.android.pushservice.action.BIND_SYNC" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        <service
+                android:name="com.baidu.android.pushservice.PushService"
+                android:exported="true"
+                android:process=":bdservice_v1"  >
+            <intent-filter>
+                <action android:name="com.baidu.android.pushservice.action.PUSH_SERVICE" />
+            </intent-filter>
+        </service>
+        <!-- push结束 -->
+
+        <!-- 在百度开发者中心查询应用的API Key -->
+        <meta-data android:name="api_key" android:value="请到百度开发者平台上获取" />
+            
+        </config-file>
+        <source-file src="src/android/pushservice-4.1.0.jar" target-dir="libs"/>
+        <source-file src="src/android/libbdpush_V2_1.so" target-dir="libs/armeabi"/>
+		<source-file src="src/android/libbdpush_V2_1.so" target-dir="libs/mips"/>
+        <source-file src="src/android/PushMessageReceiver.java" target-dir="src/com/phonegap/plugins/baidupushservice"/>
+        <source-file src="src/android/PushService.java" target-dir="src/com/phonegap/plugins/baidupushservice"/>
+        <source-file src="src/android/Utils.java" target-dir="src/com/phonegap/plugins/baidupushservice"/>
+    	<source-file src="src/android/notification_custom_builder.xml" target-dir="res/layout"/>
+    	<source-file src="src/android/simple_notification_icon.png" target-dir="res/drawable"/>
+    </platform>
+</plugin>
