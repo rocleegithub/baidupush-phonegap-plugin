@@ -16,8 +16,8 @@ http://developer.baidu.com/wiki/index.php?title=docs/cplat/push
  文档地址 http://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-Line%20Interface
  <br/>然后使用添加插件命令 cordova plugin add https://github.com/rocleegithub/baidupush-phonegap-plugin
 ### 二、另外的手动步骤
- 1.请将工程的 Application 类继承 FrontiaApplication 类，在 onCreate 函数中加上:super.onCreate()，否则会崩溃;另外一种方法是：在自定义 Application 的 onCreate 方法中调用 Push 的接口：	FrontiaApplication.initFrontia(Context context)，否则 push 的接口无法使用。具体的步骤如下：<br/>
-> 在自定义 Application 中进行初始化调用，有三种方法：
+ 1.请将工程的 Application 类继承 FrontiaApplication 类
+> 有三种方法：
 > a.  (推荐使用方法，最简单)  直接在 AndroidManifest.xml 中指定 Application 的 android:name 属性值为 FrontiaApplication 类。
 					<application android:name="com.baidu.frontia.FrontiaApplication">
 					<!--  其它的略去-- >
