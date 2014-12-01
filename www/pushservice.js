@@ -52,10 +52,11 @@
         var ret = exec(callback,this.error_callback,'BaiduPush',name,!args?[]:args);
         return ret;
     };
-    BaiduPushService.prototype.init = function(){
+    BaiduPushService.prototype.init = function(callback){
 
         try{
-            this.call_native("init",null,null);
+            this.call_native("init", null, null);
+            addCallbackManage(this, "onBind", callback);
         }
         catch(exception){
             console.log(exception);
@@ -169,7 +170,6 @@
     var baiduPushService = new BaiduPushService();
     module.exports = baiduPushService;
 
-
     /*
      *
      * 参数 operation :onUnbind onMessage onNotification onSetTags onDelTags onListTags onUnbind
@@ -187,6 +187,7 @@
                     case "onSetTags":
                     case "onDelTags":
                     case "onListTags":
+                    case "onBind":
                         doCallbackManage(baiduPushService,bToObj.operation,bToObj)
                         break;
                     default:

@@ -67,7 +67,7 @@ public class PushService extends CordovaPlugin {
         // 您可以用自定义常量等其它方式实现，来替换参数中的Utils.getMetaValue(PushDemoActivity.this,
         // "api_key")
         // 通过share preference实现的绑定标志开关，如果已经成功绑定，就取消这次绑定
-        if (!Utils.hasBind(cordova.getActivity().getApplicationContext())) {
+        //if (!Utils.hasBind(cordova.getActivity().getApplicationContext())) {
             //！！ 请将AndroidManifest.xml 104行处 api_key 字段值修改为自己的 api_key 方可使用 ！！
             //！！ ATTENTION：You need to modify the value of api_key to your own at row 104 in AndroidManifest.xml to use this Demo !!
             PushManager.startWork(cordova.getActivity().getApplicationContext(),
@@ -75,7 +75,7 @@ public class PushService extends CordovaPlugin {
                     Utils.getMetaValue(cordova.getActivity(), "api_key"));
             // Push: 如果想基于地理位置推送，可以打开支持地理位置的推送的开关
             // PushManager.enableLbs(getApplicationContext());
-        }
+        //}
 
         // Push: 设置自定义的通知样式，具体API介绍见用户手册，如果想使用系统默认的可以不加这段代码
         // 请在通知推送界面中，高级设置->通知栏样式->自定义样式，选中并且填写值：1，

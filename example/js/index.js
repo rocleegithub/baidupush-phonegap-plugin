@@ -48,7 +48,9 @@ var app = {
         cordova.plugins.baiduPushService.log=function(data){
             pushlog.innerHTML=JSON.stringify( data)+'<hr/>'+pushlog.innerHTML;
         };
-        cordova.plugins.baiduPushService.init();
+        cordova.plugins.baiduPushService.init(function(d){
+          alert(JSON.stringify(d));
+        });
         cordova.plugins.baiduPushService.regOnNotification(function(d){
             alert(JSON.stringify(d))
         });
