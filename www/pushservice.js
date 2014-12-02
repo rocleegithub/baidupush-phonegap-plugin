@@ -24,16 +24,15 @@
 //        }
 //    });
 
-    function addCallbackManage(instance, name,fn){
-        !instance.callbackManage[name]&&(instance.callbackManage[name]=[],instance.callbackManage[name].push(fn));
+    function addCallbackManage(instance, name, fn){
+        fns = instance.callbackManage[name]
+        !fns && (fns=[], fns.push(fn));
     }
-    function doCallbackManage(instance, name,data){
-        var arr=instance.callbackManage[name];
-            while (arr&&arr.length) {
-                var fn = arr.pop();
-                fn && fn(data);
-            }
-
+    function doCallbackManage(instance, name, data){
+        var fns = instance.callbackManage[name];
+        for (var i in fns) {
+            fns[i] && fns[i](data);
+        };
     }
 
     var BaiduPushService = function(){
