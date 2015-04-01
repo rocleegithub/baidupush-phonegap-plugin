@@ -29,8 +29,14 @@
     }
     function doCallbackManage(instance, name,data){
         var arr=instance.callbackManage[name];
-            while (arr&&arr.length) {
+            /*while (arr&&arr.length) {
                 var fn = arr.pop();
+                fn && fn(data);
+            }*/
+            // execute the callback function rather than pop-remove them from manage array
+            var idx = 0;
+            for (; idx < arr.length; idx++) {
+                var fn = arr[idx];
                 fn && fn(data);
             }
 
