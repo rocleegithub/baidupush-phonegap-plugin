@@ -90,9 +90,9 @@
         <meta-data android:name="api_key" android:value="请到百度开发者平台上获取" />
             
         </config-file>
-        <source-file src="src/android/pushservice-4.1.0.jar" target-dir="libs"/>
-        <source-file src="src/android/libbdpush_V2_1.so" target-dir="libs/armeabi"/>
-		<source-file src="src/android/libbdpush_V2_1.so" target-dir="libs/mips"/>
+        <source-file src="src/android/pushservice-4.4.0.71.jar" target-dir="libs"/>
+        <source-file src="src/android/libbdpush_V2_2.so" target-dir="libs/armeabi"/>
+		<source-file src="src/android/libbdpush_V2_2.so" target-dir="libs/mips"/>
         <source-file src="src/android/PushMessageReceiver.java" target-dir="src/com/phonegap/plugins/baidupushservice"/>
         <source-file src="src/android/PushService.java" target-dir="src/com/phonegap/plugins/baidupushservice"/>
         <source-file src="src/android/Utils.java" target-dir="src/com/phonegap/plugins/baidupushservice"/>
