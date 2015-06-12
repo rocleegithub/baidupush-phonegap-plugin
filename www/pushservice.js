@@ -24,16 +24,15 @@
 //        }
 //    });
 
-    function addCallbackManage(instance, name,fn){
-        !instance.callbackManage[name]&&(instance.callbackManage[name]=[],instance.callbackManage[name].push(fn));
+    function addCallbackManage(instance, name, fn){
+        fns = instance.callbackManage[name]
+        !fns && (fns=[], fns.push(fn));
     }
-    function doCallbackManage(instance, name,data){
-        var arr=instance.callbackManage[name];
-            while (arr&&arr.length) {
-                var fn = arr.pop();
-                fn && fn(data);
-            }
-
+    function doCallbackManage(instance, name, data){
+        var fns = instance.callbackManage[name];
+        for (var i in fns) {
+            fns[i] && fns[i](data);
+        };
     }
 
     var BaiduPushService = function(){
@@ -52,10 +51,11 @@
         var ret = exec(callback,this.error_callback,'BaiduPush',name,!args?[]:args);
         return ret;
     };
-    BaiduPushService.prototype.init = function(){
+    BaiduPushService.prototype.init = function(callback){
 
         try{
-            this.call_native("init",null,null);
+            this.call_native("init", null, null);
+            addCallbackManage(this, "onBind", callback);
         }
         catch(exception){
             console.log(exception);
@@ -169,7 +169,6 @@
     var baiduPushService = new BaiduPushService();
     module.exports = baiduPushService;
 
-
     /*
      *
      * 参数 operation :onUnbind onMessage onNotification onSetTags onDelTags onListTags onUnbind
@@ -187,6 +186,7 @@
                     case "onSetTags":
                     case "onDelTags":
                     case "onListTags":
+                    case "onBind":
                         doCallbackManage(baiduPushService,bToObj.operation,bToObj)
                         break;
                     default:
